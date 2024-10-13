@@ -1,9 +1,11 @@
-#include "hnswlib.h"
+#include "../resources/hnswlib.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 #include <filesystem>
+#include <cassert>
+
 
 const int DIMENSIONS = 100;
 const int MAX_ELEMENTS = 100000;
