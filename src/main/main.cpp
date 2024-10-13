@@ -18,7 +18,7 @@ int main () {
       hnswlib::L2SpaceI l2space(DIMENSIONS); 
       hnswlib::HierarchicalNSW<int> hnsw_alg(&l2space, MAX_ELEMS, M, EF_CONSTRUCTION);
 
-      const std::string vector_dir = "~/users/samjo/nvme1n1/SPTAG/SPTAG/datasets/SPACEV1B/vectors.bin/";
+      const std::string vector_dir = "../../../SPACEV1B/vectors.bin/";
 
       // This is going to be the outer loop for each binary file in the directory
       for (const auto & binary_file : std::filesystem::directory_iterator(vector_dir)) {
@@ -69,7 +69,7 @@ int main () {
                   total_vectors_read += num_vectors; 
             }
 
-            hnsw_alg.saveIndex("HNSW_SPACEV1B/index.bin"); 
+            hnsw_alg.saveIndex("../../../HNSW_SPACEV1B/index.bin"); 
 
             free(vectors);
             file.close();
