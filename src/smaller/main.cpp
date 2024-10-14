@@ -10,8 +10,8 @@
 
 const int DIMENSIONS = 100;
 const int MAX_ELEMENTS = 100000;
-const int M = 30;
-const int EF_CONSTRUCTION = 50;
+const int M = 16;
+const int EF_CONSTRUCTION = 100;
 
 int main() {
     hnswlib::L2Space l2space(DIMENSIONS);
