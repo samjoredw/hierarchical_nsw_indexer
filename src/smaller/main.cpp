@@ -32,6 +32,11 @@ int main() {
         return -1;
     }
 
+    std::cout << "Environment Parameters:" << std::endl;
+    std::cout << "Dimensions: " << DIMENSIONS << std::endl;
+    std::cout << "Number of Vectors: " << MAX_ELEMENTS << std::endl;
+    std::cout << "Number of Neighbors (M): " << M << std::endl;
+    std::cout << "EF Construction: " << EF_CONSTRUCTION << std::endl;
     auto start_time = std::chrono::high_resolution_clock::now();
     for (size_t i = 0; i < MAX_ELEMENTS; ++i) {
         hnsw_alg.addPoint(vectors.data() + i * DIMENSIONS, i);
