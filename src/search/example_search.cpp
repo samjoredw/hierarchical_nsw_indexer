@@ -1,5 +1,4 @@
-#include "../resource/hnswlib.h"
-
+#include "../resources/hnswlib.h"
 
 int main() {
     int dim = 16;               // Dimension of the elements

@@ -1,4 +1,4 @@
-#include "../resource/hnswlib.h"
+#include "../resources/hnswlib.h"
 #include <thread>
 
 

@@ -1,5 +1,4 @@
-#include "../resource/hnswlib.h"
-
+#include "../resources/hnswlib.h"
 typedef unsigned int docidtype;
 typedef float dist_t;
 
