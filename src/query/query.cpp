@@ -3,8 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-#include <fstream> // Include fstream for file operations
-#include <queue>   // Include queue for std::priority_queue
+#include <fstream>
+#include <queue>
+#include <cmath> // Include cmath for isnan function
 
 int main() {
     // Load the existing HNSW index from disk
@@ -22,17 +23,24 @@ int main() {
         return -1;
     }
 
-    // Seek to the second vector (assuming each vector is DIMENSIONS * sizeof(float) bytes)
-    query_file.seekg(DIMENSIONS * sizeof(float), std::ios::beg); // Move to the second vector
+    // Seek to the second vector (assuming each vector is DIMENSIONS * sizeof(int8_t) bytes)
+    query_file.seekg(DIMENSIONS * sizeof(int8_t), std::ios::beg); // Move to the second vector
 
-    float query_vector[DIMENSIONS];
-    query_file.read(reinterpret_cast<char*>(query_vector), DIMENSIONS * sizeof(float));
-    if (query_file.gcount() < DIMENSIONS * sizeof(float)) {
+    int8_t query_vector[DIMENSIONS]; // Change to int8_t
+    query_file.read(reinterpret_cast<char*>(query_vector), DIMENSIONS * sizeof(int8_t));
+    if (query_file.gcount() < DIMENSIONS * sizeof(int8_t)) {
         std::cerr << "Not enough data read from query file." << std::endl;
         query_file.close(); // Close the file
         delete alg_hnsw; // Clean up memory before exiting
         return -1;
     }
+
+    // Print the query vector to check for NaN values
+    std::cout << "Query Vector:" << std::endl;
+    for (int i = 0; i < DIMENSIONS; ++i) {
+        std::cout << static_cast<int>(query_vector[i]) << " "; // Cast to int for display
+    }
+    std::cout << std::endl;
 
     // Number of neighbors to search
     const int k = 3;
@@ -40,7 +48,7 @@ int main() {
     // Measure query time
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    // Perform the search for the nearest neighbors using the second query vector
+    // Perform the search for the nearest neighbors using the constant query vector
     std::priority_queue<std::pair<float, hnswlib::labeltype>> result = alg_hnsw->searchKnn(query_vector, k);
     
     // Output the results
@@ -48,7 +56,7 @@ int main() {
     while (!result.empty()) {
         auto [dist, label] = result.top();
         result.pop();
-        std::cout << "Label: " << label << ", Distance: " << dist << std::endl;
+        std::cout << "Label: " << label << ", Distance: " << dist << std::endl; // Distance should be computed correctly now
     }
 
     auto end_time = std::chrono::high_resolution_clock::now();
