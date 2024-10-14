@@ -13,7 +13,7 @@ int main() {
     hnswlib::L2Space space(DIMENSIONS);
     hnswlib::HierarchicalNSW<float>* alg_hnsw = new hnswlib::HierarchicalNSW<float>(&space, index_path);
 
-    const std::string query_path = "../../../../SPTAG/SPTAG/datasets/SPACEV1B/";
+    const std::string query_path = "../../../../SPTAG/SPTAG/datasets/SPACEV1B/query.bin";
     std::ifstream query_file(query_path, std::ios::binary);
     if (!query_file.is_open()) {
         std::cerr << "Could not open query file." << std::endl;
@@ -25,8 +25,8 @@ int main() {
     query_file.read(reinterpret_cast<char*>(query_vector), DIMENSIONS * sizeof(float));
     if (query_file.gcount() < DIMENSIONS * sizeof(float)) {
         std::cerr << "Not enough data read from query file." << std::endl;
-        query_file.close(); // Close the file
-        delete alg_hnsw; // Clean up memory before exiting
+        query_file.close(); 
+        delete alg_hnsw; 
         return -1;
     }
 
