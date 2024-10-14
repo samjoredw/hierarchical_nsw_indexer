@@ -5,6 +5,7 @@
 #include <string>
 #include <filesystem>
 #include <cassert>
+#include <chrono>
 
 
 const int DIMENSIONS = 100;
@@ -31,6 +32,7 @@ int main() {
         return -1;
     }
 
+    auto start_time = std::chrono::high_resolution_clock::now();
     for (size_t i = 0; i < MAX_ELEMENTS; ++i) {
         hnsw_alg.addPoint(vectors.data() + i * DIMENSIONS, i);
     }
@@ -40,6 +42,10 @@ int main() {
     file.close();
 
     std::cout << "Successfully added " << MAX_ELEMENTS << " vectors to the HNSW index." << std::endl;
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed_time = end_time - start_time;
+    std::cout << "Time taken to add points: " << elapsed_time.count() << " seconds." << std::endl;
 
     return 0;
 }
